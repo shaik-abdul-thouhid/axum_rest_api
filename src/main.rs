@@ -25,10 +25,6 @@ use tower_cookies::CookieManagerLayer;
 use tower_http::services::ServeDir;
 use uuid::Uuid;
 
-struct SimpleStruct {
-    field1: i32,
-}
-
 #[tokio::main]
 async fn main() -> Result<()> {
     // Initialize ModelController
@@ -37,10 +33,6 @@ async fn main() -> Result<()> {
     let routes_api = web::routes_tickets::routes(model_controller.clone()).route_layer(
         middleware::from_fn(web::middleware_auth::middleware_require_auth),
     );
-
-    let simple_struct = SimpleStruct { field1: 38 };
-
-    println!("{}", stringify!(simple_struct));
 
     let routes_all = Router::new()
         .merge(routes_hello())
